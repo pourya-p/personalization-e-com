@@ -3,7 +3,7 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
 
     class Meta:
         ordering = ('name',)
@@ -14,7 +14,7 @@ class Category(models.Model):
 class Product(models.Model):
     category = models.ForeignKey('category', on_delete=models.SET_NULL, null=True, related_name='products')
     name = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255, unique=True)
+    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
     img = models.ImageField(upload_to='product_images/%Y/%m/%d/')
     description = models.TextField()
     sex = models.CharField(
