@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, redirect, reverse
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 from .forms import PersonalizeForm
 from .models import Product
@@ -26,3 +26,8 @@ class ProductListView(View):
         )
         return render(request, 'store/product_list.html', {'products': products})
 
+
+class ProductDetail(View):
+    def get(self, request, slug):
+        product = get_object_or_404(Product, slug=slug)
+        return render(request, 'store/product_detail.html', {'product': product})
