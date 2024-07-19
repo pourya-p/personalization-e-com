@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.conf import settings
 
 
 class Category(models.Model):
@@ -24,12 +26,12 @@ class Product(models.Model):
         ),
         max_length=1,
     )
-    age_min = models.PositiveIntegerField(default=0)
-    age_max = models.PositiveIntegerField(default=0)
-    height_min = models.PositiveIntegerField(default=0)
-    height_max = models.PositiveIntegerField(default=0)
-    weight_min = models.PositiveIntegerField(default=0)
-    weigh_max = models.PositiveIntegerField(default=0)
+    age_min = models.PositiveIntegerField(default=settings.MIN_PRODUCT_AGE, validators=[MinValueValidator(settings.MIN_PRODUCT_AGE)])
+    age_max = models.PositiveIntegerField(default=settings.MAX_PRODUCT_AGE, validators=[MaxValueValidator(settings.MAX_PRODUCT_AGE)])
+    height_min = models.PositiveIntegerField(default=settings.MIN_PRODUCT_HEIGHT, validators=[MinValueValidator(settings.MIN_PRODUCT_HEIGHT)])
+    height_max = models.PositiveIntegerField(default=settings.MAX_PRODUCT_HEIGHT, validators=[MaxValueValidator(settings.MAX_PRODUCT_HEIGHT)])
+    weight_min = models.PositiveIntegerField(default=settings.MIN_PRODUCT_WEIGHT, validators=[MinValueValidator(settings.MIN_PRODUCT_WEIGHT)])
+    weight_max = models.PositiveIntegerField(default=settings.MAX_PRODUCT_WEIGHT, validators=[MaxValueValidator(settings.MAX_PRODUCT_WEIGHT)])
     price = models.IntegerField()
     in_stock = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
