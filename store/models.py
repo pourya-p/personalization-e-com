@@ -17,6 +17,19 @@ class Product(models.Model):
     slug = models.SlugField(max_length=255, unique=True)
     img = models.ImageField(upload_to='product_images/%Y/%m/%d/')
     description = models.TextField()
+    sex = models.CharField(
+        choices=(
+            ('0', 'زن'),
+            ('1', 'مرد'),
+        ),
+        max_length=1,
+    )
+    age_min = models.PositiveIntegerField(default=0)
+    age_max = models.PositiveIntegerField(default=0)
+    height_min = models.PositiveIntegerField(default=0)
+    height_max = models.PositiveIntegerField(default=0)
+    weight_min = models.PositiveIntegerField(default=0)
+    weigh_max = models.PositiveIntegerField(default=0)
     price = models.IntegerField()
     in_stock = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
