@@ -1,9 +1,39 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block body %}
-<h3>this is index</h3>
-<form action="{% url 'store:product_list' %}" method="get">
-    {{form.as_div}}
-    <button type="submit">ثبت</button>
-</form>
+<div class="wrapper" style="background-image: url({% static 'images/bg-registration-form-1.jpg' %});">
+    <div class="inner">
+        <div class="image-holder">
+            <img src="{% static 'images/registration-form-1.jpg' %}" alt="">
+        </div>
+        <form action="{% url 'store:product_list' %}">
+            <h3>جست و جو محصول مناسب شما</h3>
+            <div class="form-wrapper">
+                <select name="sex" id=id_sex"" class="form-control" style="text-align-last:center;">
+                    <option value="1">مرد</option>
+                    <option value="0">زن</option>
+                </select>
+                {% if errors.sex %}{{errors.sex}}{% endif %}
+                <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
+            </div>
+            <div class="form-wrapper">
+                <input type="text" name="age" id="id_age" type="number" placeholder="سن" class="form-control">
+                {% if errors.age %}{{errors.age}}{% endif %}
+            </div>
+            <div class="form-wrapper">
+                <input type="text" name="height" id="id_height" type="number" placeholder="قد" class="form-control">
+                {% if errors.height %}{{errors.height}}{% endif %}
+            </div>
+            <div class="form-wrapper">
+                <input type="text" name="weight" id="id_weight" type="number" placeholder="وزن" class="form-control">
+                {% if errors.weight %}{{errors.weight}}{% endif %}
+            </div>
+
+            <button type="submit">
+                <i class="zmdi zmdi-arrow-right"></i>
+            </button>
+        </form>
+    </div>
+</div>
 {% endblock body %}
