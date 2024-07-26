@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account.apps.AccountConfig',
     'store.apps.StoreConfig',
+    'basket.apps.BasketConfig',
 ]
 
 MIDDLEWARE = [

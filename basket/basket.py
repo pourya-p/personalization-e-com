@@ -1,4 +1,4 @@
-from store.models import Product, ProductInventory
+from store.models import Product
 
 
 class Basket:
@@ -13,13 +13,13 @@ class Basket:
         self.basket = basket
 
     def add(self, product, qty):
-        product = product
+        product_id = str(product.id)
 
-        if product.sku in self.basket:
-            self.basket[product.sku]["qty"] += qty
+        if product_id in self.basket:
+            self.basket[product_id]["qty"] += qty
 
         else:
-            self.basket[product.sku] = {'qty': qty}
+            self.basket[product_id] = {'qty': qty}
 
         self.save()
 
@@ -27,9 +27,9 @@ class Basket:
         product_key = self.basket.keys()
         total_price = 0
         for key in product_key:
-            product_inv = ProductInventory.objects.get(sku=str(key))
+            product = Product.objects.get(id=key)
             qty = self.basket[key]['qty']
-            total_price += product_inv.price * qty
+            total_price += product.price * qty
 
         return total_price
 
@@ -40,14 +40,10 @@ class Basket:
         product_key = self.basket.keys()
 
         for key in product_key:
-            product_inv = ProductInventory.objects.get(sku=key)
+            product = Product.objects.get(id=key)
             qty = self.basket[key]['qty']
-            total_price = product_inv.price * qty
-            for_yield = {'product_inv': product_inv,
-                         'qty': qty,
-                         'total_price': total_price,
-                         }
-            yield for_yield
+            total_price = product.price * qty
+            yield {'product_inv': product, 'qty': qty, 'total_price': total_price}
 
     def save(self):
         self.session.modified = True
