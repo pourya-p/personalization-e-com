@@ -43,7 +43,7 @@ class Basket:
             product = Product.objects.get(id=key)
             qty = self.basket[key]['qty']
             total_price = product.price * qty
-            yield {'product_inv': product, 'qty': qty, 'total_price': total_price}
+            yield {'product': product, 'qty': qty, 'total_price': total_price}
 
     def save(self):
         self.session.modified = True
