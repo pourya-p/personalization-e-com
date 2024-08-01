@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block costume_head %}
+    <link rel="stylesheet" href="{% static 'fonts/material-design-iconic-font/css/material-design-iconic-font.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock costume_head %}
+
 {% block body %}
 <div class="wrapper" style="background-image: url({% static 'images/bg-registration-form-1.jpg' %});">
     <div class="inner">
