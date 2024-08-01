@@ -23,7 +23,7 @@ class Basket:
 
         self.save()
 
-    def basket_total_price(self):
+    def total_price(self):
         product_key = self.basket.keys()
         total_price = 0
         for key in product_key:
