@@ -8,6 +8,12 @@ from .models import Order
 
 
 class OrderForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+
     class Meta:
         model = Order
         fields = ["name", "phone_number", "address"]
@@ -17,3 +23,4 @@ class OrderForm(forms.ModelForm):
         pattern = re.compile(r"^0?9\d{9}$")
         if not pattern.match(phone_number):
             raise ValidationError('تلفن صحیح نیست')
+        return phone_number

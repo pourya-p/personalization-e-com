@@ -5,8 +5,6 @@ from .models import Product
 
 
 class IndexView(View):
-    form_class = PersonalizeForm
-
     def get(self, request, errors=None):
         return render(request, 'store/index.html', {'errors': errors})
 

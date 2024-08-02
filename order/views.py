@@ -1,11 +1,34 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from django.views import View
 from .forms import OrderForm
+from .models import Order, OrderProduct
+from basket.basket import Basket
 
 class CheckoutView(View):
     form_class = OrderForm
+
     def get(self, request):
-        return render(request, 'order/checkout.html')
+        return render(request, 'order/checkout.html', {'form':self.form_class()})
 
     def post(self, request):
-        pass
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            basket = Basket(request)
+            cd = form.cleaned_data
+            order = Order.objects.create(
+                name=cd['name'],
+                phone_number=cd['phone_number'],
+                address=cd['address'],
+                total_price=basket.total_price(),
+            )
+
+            for item in basket:
+                order_product = OrderProduct.objects.create(
+                    order=order,
+                    product=item['product'],
+                    qty=item['qty'],
+                    price_on_order=item['total_price'],
+                )
+            del request.session['skey']
+            return HttpResponse('<h4>سفارش شما ثبت شد</h4>')
+        return render(request, 'order/checkout.html', {'form': form})
