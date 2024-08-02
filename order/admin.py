@@ -6,7 +6,9 @@ class ProductOrderInLine(admin.StackedInline):
     raw_id_fields = ['product']
     extra = 0
 
+
 class OrderAdmin(admin.ModelAdmin):
     inlines = [ProductOrderInLine]
+
 
 admin.site.register(Order, OrderAdmin)

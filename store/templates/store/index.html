@@ -2,15 +2,15 @@
 {% load static %}
 
 {% block costume_head %}
-    <link rel="stylesheet" href="{% static 'fonts/material-design-iconic-font/css/material-design-iconic-font.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'store/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/style.css' %}">
 {% endblock costume_head %}
 
 {% block body %}
-<div class="wrapper" style="background-image: url({% static 'images/bg-registration-form-1.jpg' %});">
+<div class="wrapper" style="background-image: url({% static 'store/images/bg-registration-form-1.jpg' %});">
     <div class="inner">
         <div class="image-holder">
-            <img src="{% static 'images/registration-form-1.jpg' %}" alt="">
+            <img src="{% static 'store/images/registration-form-1.jpg' %}" alt="">
         </div>
         <form action="{% url 'store:product_list' %}">
             <h3>جست و جو محصول مناسب شما</h3>
