@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load store_extra %}
+
+
+{% block body %}
+<!-- sidebar + content -->
+<section >
+  <div class="container">
+    <div class="row">
+      <!-- sidebar -->
+
+      <!-- sidebar -->
+      <!-- content -->
+      <div class="col-lg-9">
+
+        <div style="min-height: 500px;margin-top:10px;">
+
+        {% for product in page_obj %}
+          <div class="row justify-content-center mb-3">
+          <div class="col-md-12">
+            <div class="card shadow-0 border rounded-3">
+              <div class="card-body">
+                <a href="{{ product.get_absolute_url }}" style="color: inherit;">
+                <div class="row g-0">
+                  <div class="col-xl-3 col-md-4 d-flex justify-content-center">
+                    <div class="bg-image hover-zoom ripple rounded ripple-surface me-md-3 mb-3 mb-md-0">
+                      <img src="{% if product.img %}{{ product.img.url }}{% endif %}" alt="image" style="padding:5px;" class="w-100">
+                        <div class="hover-overlay">
+                          <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                        </div>
+                    </div>
+
+                  </div>
+                  <div class="col-xl-6 col-md-5 col-sm-7">
+                    <h5>{{product.name}}</h5>
+                    <p class="text mb-4 mb-md-0">
+                      {{product.description}}
+                    </p>
+                  </div>
+                  <div class="col-xl-3 col-md-3 col-sm-5">
+                    <div class="d-flex flex-row align-items-center mb-1">
+                      <h4 class="mb-1 me-1">{{product.price|floatformat:"-3g"}}</h4>
+                    </div>
+                  </div>
+                </div>
+                  </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+          <div class="row justify-content-center mb-3">
+          <div class="col-md-12">
+            <div class="card shadow-0 border rounded-3">
+              <div class="card-body">
+                <div class="row g-0">
+                  <div class="col-xl-3 col-md-4 d-flex justify-content-center">
+                    <div class="bg-image hover-zoom ripple rounded ripple-surface me-md-3 mb-3 mb-md-0">
+                      <img src="{% static 'store/images/pngtree-not-found-outline-icon-vectors-png-image_1737857.jpg' %}" class="w-100">
+                      <a href="#!">
+                        <div class="hover-overlay">
+                          <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-md-5 col-sm-7">
+                    <h5>محصولی پیدا نشد</h5>
+
+                    <p class="text mb-4 mb-md-0">
+                      ممکن است اطلاعات را اشتباه وارد کرده باشید یا در حال حاضر محصولی مناسب شما وجود ندارد.
+                    </p>
+                  </div>
+                  <div class="col-xl-3 col-md-3 col-sm-5">
+
+                    <div class="mt-4">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+          </div>
+
+
+        <hr>
+
+        <!-- Pagination -->
+        <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
+          {% if page_obj.has_other_pages %}
+            <ul class="pagination">
+              {% if page_obj.has_previous %}
+              <li class="page-item active">
+                <a class="page-link" href="{{ request.get_full_path  | update_path_page:page_obj.previous_page_number}}" aria-label="Previous">
+                  <span aria-hidden="true">«</span>
+                </a>
+              </li>
+              {% endif %}
+              <li class="page-item active"><a class="page-link" href="#">{{page_obj.number}}</a></li>
+              {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="{{ request.get_full_path  | update_path_page:page_obj.next_page_number}}" aria-label="Next">
+                  <span aria-hidden="true">»</span>
+
+                </a>
+
+              </li>
+              {% endif %}
+
+            </ul>
+          {% endif %}
+        </nav>
+
+        <!-- Pagination -->
+      </div>
+    </div>
+  </div>
+</section>
+
+{% block custom_html %}
+<script src="{% static 'store/js/mdb.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'store/js/mdb-plugins-gathered.min.js' %}"></script>
+{% endblock custom_html %}
+{% endblock body %}

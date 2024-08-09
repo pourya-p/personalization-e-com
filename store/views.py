@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
+from django.core.paginator import Paginator
 from .forms import PersonalizeForm
 from .models import Product
 
@@ -25,7 +26,11 @@ class ProductListView(View):
                 weight_min__lte=cd['weight'],
 
             )
-            return render(request, 'store/product_list.html', {'products': products})
+            paginator = Paginator(products, 3)
+            page_number = request.GET.get("page", 1)
+            page_obj = paginator.get_page(page_number)
+
+            return render(request, 'store/product_list.html', {'page_obj': page_obj})
         else:
 
             return IndexView().get(request, form.errors)
