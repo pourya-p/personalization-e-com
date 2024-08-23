@@ -121,7 +121,7 @@
       </div>
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">مشخصات خریدار</h4>
-        <form class="needs-validation" novalidate method="POST">
+        <form class="needs-validation mb-5" novalidate method="POST">
           {% csrf_token %}
           <div class="row g-3">
             {% for field in form %}
@@ -130,6 +130,7 @@
                 {{ field }}
             {% endfor %}
           <button class="w-100 btn btn-primary btn-lg" type="submit">ثبت سفارش</button>
+            </div>
         </form>
       </div>
     </div>
@@ -137,13 +138,5 @@
 {% endblock body %}
 
 {% block custom_html %}
- <footer class="my-5 pt-5 text-body-secondary text-center text-small">
-    <p class="mb-1">&copy; 2024-2017 اسم الشركة</p>
-    <ul class="list-inline">
-      <li class="list-inline-item"><a href="#">سياسة الخصوصية</a></li>
-      <li class="list-inline-item"><a href="#">اتفاقية الاستخدام</a></li>
-      <li class="list-inline-item"><a href="#">الدعم الفني</a></li>
-    </ul>
-  </footer>
 <script src="{% static 'order/js/checkout.js' %}"></script>
 {% endblock custom_html %}
