@@ -47,7 +47,6 @@
 <!--                      <td class="text-center align-middle px-0"><a href="#" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a></td>-->
                     </tr>
                   {% endfor %}
-
                 </tbody>
               </table>
             </div>
@@ -64,8 +63,12 @@
 
             <div class="row float-right">
               <div class="col-5">
-                <a href="#">
-                <h4 type="button" class=" mt-2 mr-3">ادامه خرید</h4>
+                  {% if personal.values  %}
+                        <a href="{% url 'store:product_list' %}?sex={{personal.values.sex}}&age={{personal.values.age}}&height={{personal.values.height}}&weight={{personal.values.weight}}">
+                    {% else %}
+                        <a href="/">
+                  {% endif %}
+                <h4 type="button" class="btn btn-lg btn-primary mt-2">ادامه خرید</h4>
                 </a>
               </div>
               <div class="col-6">
