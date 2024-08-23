@@ -26,8 +26,6 @@ class ProductListView(View):
 
             request.session.modified = True
 
-            print(request.session['personal'])
-
             products = Product.objects.filter(
                 sex=cd['sex'],
                 age_max__gte=cd['age'],
