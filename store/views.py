@@ -16,6 +16,18 @@ class ProductListView(View):
         form = self.form_class(request.GET)
         if form.is_valid():
             cd = form.cleaned_data
+
+            if 'personal' in request.session:
+                personal = request.session.get('personal')
+            else:
+                personal = request.session['personal'] = {}
+
+            personal['values'] = cd
+
+            request.session.modified = True
+
+            print(request.session['personal'])
+
             products = Product.objects.filter(
                 sex=cd['sex'],
                 age_max__gte=cd['age'],
