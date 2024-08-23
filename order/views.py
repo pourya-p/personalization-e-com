@@ -33,5 +33,5 @@ class CheckoutView(View):
                     price_on_order=item['total_price'],
                 )
             del request.session['basket']
-            return HttpResponse('<h4>سفارش شما ثبت شد</h4>')
+            return render(request, 'order/result.html')
         return render(request, 'order/checkout.html', {'form': form})
