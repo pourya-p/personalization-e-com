@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from django.views import View
 from .forms import OrderForm
 from .models import Order, OrderProduct
@@ -8,7 +8,10 @@ class CheckoutView(View):
     form_class = OrderForm
 
     def get(self, request):
-        return render(request, 'order/checkout.html', {'form':self.form_class()})
+        if request.session.get('basket'):
+            return render(request, 'order/checkout.html', {'form':self.form_class()})
+        else:
+            return redirect('store:index')
 
     def post(self, request):
         form = self.form_class(request.POST)
