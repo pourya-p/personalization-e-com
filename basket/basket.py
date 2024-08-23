@@ -5,10 +5,10 @@ class Basket:
     def __init__(self, request):
         self.session = request.session
 
-        if 'skey' in request.session:
-            basket = self.session.get('skey')
+        if 'basket' in request.session:
+            basket = self.session.get('basket')
         else:
-            basket = self.session['skey'] = {}
+            basket = self.session['basket'] = {}
 
         self.basket = basket
 
