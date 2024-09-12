@@ -3,7 +3,7 @@ from django.views import View
 from django.views.generic import ListView, FormView
 from django.core.paginator import Paginator
 from .forms import PersonalizeForm
-from .models import Product
+from .models import Product, Category
 
 
 class IndexFormView(FormView):
@@ -26,9 +26,12 @@ class ProductListView(ListView):
     page_kwarg = 'page'
     template_name = 'store/product_list.html'
 
+
     def get_queryset(self):
-        if category := self.kwargs.get('category'):
-            return get_list_or_404(Product, category__slug=category)
+        if category_slug := self.kwargs.get('category'):
+            category = get_object_or_404(Category, slug=category_slug)
+            products = category.products.all()
+            return products
         if self.request.GET.get('sex'):
             q = self.request.GET
             return get_list_or_404(
