@@ -10,13 +10,18 @@ class PersonalizeForm(forms.Form):
             ('1', 'مرد'),
         ),
         label='جنسیت',
+        widget=forms.Select(
+            attrs={
+                'placeholder': 'Name', 'style': 'text-align-last:center;', 'class': 'form-control'
+            }
+        )
     )
 
-    age = forms.IntegerField(label='سن')
+    age = forms.IntegerField(label='سن', widget=forms.NumberInput(attrs={'placeholder': 'سن', 'class':'form-control'}))
 
-    height = forms.IntegerField(label='قد')
+    height = forms.IntegerField(label='قد', widget=forms.NumberInput(attrs={'placeholder': 'قد', 'class':'form-control'}))
 
-    weight = forms.IntegerField(label='وزن')
+    weight = forms.IntegerField(label='وزن', widget=forms.NumberInput(attrs={'placeholder': 'وزن', 'class':'form-control'}))
 
     def clean_age(self):
         age = self.cleaned_data['age']
