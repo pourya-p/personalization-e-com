@@ -1,49 +1,48 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
 from django.views import View
+from django.views.generic import ListView, FormView
 from django.core.paginator import Paginator
 from .forms import PersonalizeForm
 from .models import Product
 
 
-class IndexView(View):
-    def get(self, request, errors=None):
-        return render(request, 'store/index.html', {'errors': errors})
-
-
-class ProductListView(View):
+class IndexFormView(FormView):
+    template_name = 'store/index.html'
     form_class = PersonalizeForm
-    def get(self, request):
-        form = self.form_class(request.GET)
-        if form.is_valid():
-            cd = form.cleaned_data
 
-            if 'personal' in request.session:
-                personal = request.session.get('personal')
-            else:
-                personal = request.session['personal'] = {}
+    def get_success_url(self):
+        form_data = self.request.POST
+        sex = form_data['sex']
+        age = form_data['age']
+        height = form_data['height']
+        weight = form_data['weight']
+        url = f'product-list?sex={sex}&age={age}&height={height}&weight={weight}'
+        return url
 
-            personal['values'] = cd
 
-            request.session.modified = True
+class ProductListView(ListView):
+    model = Product
+    paginate_by = 6
+    page_kwarg = 'page'
+    template_name = 'store/product_list.html'
 
-            products = Product.objects.filter(
-                sex=cd['sex'],
-                age_max__gte=cd['age'],
-                age_min__lte=cd['age'],
-                height_max__gte=cd['height'],
-                height_min__lte=cd['height'],
-                weight_max__gte=cd['weight'],
-                weight_min__lte=cd['weight'],
+    def get_queryset(self):
+        if category := self.kwargs.get('category'):
+            return get_list_or_404(Product, category__slug=category)
+        if self.request.GET.get('sex'):
+            q = self.request.GET
+            return get_list_or_404(
+                Product,
+                sex=q['sex'],
+                age_max__gte=q['age'],
+                age_min__lte=q['age'],
+                height_max__gte=q['height'],
+                height_min__lte=q['height'],
+                weight_max__gte=q['weight'],
+                weight_min__lte=q['weight'],
 
             )
-            paginator = Paginator(products, 6)
-            page_number = request.GET.get("page", 1)
-            page_obj = paginator.get_page(page_number)
-
-            return render(request, 'store/product_list.html', {'page_obj': page_obj})
-        else:
-
-            return IndexView().get(request, form.errors)
+        return super().get_queryset()
 
 
 class ProductDetail(View):
