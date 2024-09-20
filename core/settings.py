@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'basket.apps.BasketConfig',
     'order.apps.OrderConfig',
     'index.apps.IndexConfig',
+    'search.apps.SearchConfig',
 ]
 
 MIDDLEWARE = [

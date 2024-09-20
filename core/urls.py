@@ -23,6 +23,7 @@ urlpatterns = [
     path('store/', include('store.urls', namespace='store')),
     path('basket/', include('basket.urls', namespace='basket')),
     path('order/', include('order.urls', namespace='order')),
+    path('search', include('search.urls', namespace='search')),
 ]
 
 if settings.DEBUG:

@@ -13,10 +13,6 @@ def update_path_page(url, arg):
 
 
 def in_list(value, arg):
-    print(value)
-    print(arg.split(','))
-    print(value in arg.split(','))
-
     return value in arg.split(',')
 
 

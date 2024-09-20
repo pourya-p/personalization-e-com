@@ -27,9 +27,9 @@
 
         </ul>
       </div>
-            <form class="form-inline">
+            <form class="form-inline" action="{% url 'search:search' %}">
         <div class="input-group rounded">
-          <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+          <input type="search" name="q" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
         </div>
       </form>
 
