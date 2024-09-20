@@ -19,7 +19,8 @@ from django.urls import path, include
 from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('store.urls', namespace='store')),
+    path('', include('index.urls', namespace='index')),
+    path('store/', include('store.urls', namespace='store')),
     path('basket/', include('basket.urls', namespace='basket')),
     path('order/', include('order.urls', namespace='order')),
 ]

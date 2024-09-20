@@ -1,4 +1,5 @@
 {% load static %}
+{% load store_extra %}
 <!DOCTYPE html>
 <html lang="en" dir="rtl">
 <head>
@@ -33,7 +34,7 @@
     {% endif %}
 </head>
 <body>
-{% if request.path != '/' %}
+{% if not request.path|in_list:"/store/,/" %}
 {% include 'inc/header.html' %}
 {% endif %}
         <main>
